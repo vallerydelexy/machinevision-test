@@ -19,41 +19,44 @@ export default function createEditPost() {
   const [open, setOpen] = useRecoilState(showFormAtom);
   const [userId, setUserId] = useRecoilState(userIDAtom);
   let [formData, setFormData] = useRecoilState(formDataAtom);
-  const [notificationMessage, setNotificationMessage] = useRecoilState(notificationMessageAtom);
-  const [notificationType, setNotificationType] = useRecoilState(notificationTypeAtom);
-  const [notificationState, setNotificationState] = useRecoilState(notificationAtom);
+  const [notificationMessage, setNotificationMessage] = useRecoilState(
+    notificationMessageAtom
+  );
+  const [notificationType, setNotificationType] =
+    useRecoilState(notificationTypeAtom);
+  const [notificationState, setNotificationState] =
+    useRecoilState(notificationAtom);
   const cancelButtonRef = useRef(null);
   const [currentFormData, setCurrentFormData] = useState({});
   const [usersData, setUsersData] = useRecoilState(usersDataAtom);
-  
 
   function formDataChange(event) {
-    currentFormData[event.target.name] = event.target.value
+    currentFormData[event.target.name] = event.target.value;
   }
-  function submitForm(){
+  function submitForm() {
     const axiosConfig = {
-        method: userId?'put':'post',
-        url: `https://dummyapi.io/data/v1/user/${userId??'create'}`,
-        data: currentFormData,
-        headers: {
-          "app-id": import.meta.env.VITE_APP_ID,
-          'Content-Type': 'application/json'
-      }
-    }
-    
-     axios(axiosConfig)
-     .then(res=>{
-      setUsersData(undefined)
-      setNotificationType("success")
-      setNotificationMessage(res.data)
-      setNotificationState(true)
-      setOpen(false)
-     })
-     .catch(err=>{
-      setNotificationType("error")
-      setNotificationMessage(err.response.data)
-      setNotificationState(true)
-    })
+      method: userId ? "put" : "post",
+      url: `https://dummyapi.io/data/v1/user/${userId ?? "create"}`,
+      data: currentFormData,
+      headers: {
+        "app-id": import.meta.env.VITE_APP_ID,
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios(axiosConfig)
+      .then((res) => {
+        setUsersData(undefined);
+        setNotificationType("success");
+        setNotificationMessage(res.data);
+        setNotificationState(true);
+        setOpen(false);
+      })
+      .catch((err) => {
+        setNotificationType("error");
+        setNotificationMessage(err.response.data);
+        setNotificationState(true);
+      });
   }
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -104,19 +107,28 @@ export default function createEditPost() {
                     {userId ? `Edit post ${userId}` : "Create new post"}
                   </Dialog.Title>
                   <div className="mt-2 text-sm text-gray-500">
-                  
-                    <form onChange={(event)=>formDataChange(event)} onSubmit={()=>{submitForm()}}>
+                    <form
+                      onChange={(event) => formDataChange(event)}
+                      onSubmit={() => {
+                        submitForm();
+                      }}
+                    >
                       <div className="flex flex-col gap-2">
                         <select
                           id="owner"
                           name="owner"
                           className="mt-1 block bg-gray-100 w-full pl-3 pr-10 py-2 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                          defaultValue={formData?.user?.owner ?? "Owner"}
-                          onChange={(event)=>formDataChange(event)}
+                          defaultValue={formData?.user?.owner.id ?? "Owner"}
+                          onChange={(event) => formDataChange(event)}
                         >
                           <option disabled>Owner</option>
-                          {usersData?.data?.map((pet)=>{
-                            return <option key={pet?.id+pet?.owner?.id}>{`${pet?.owner?.title} ${pet?.owner?.firstName} ${pet?.owner?.lastName}`}</option>
+                          {console.log(usersData?.data[0])}
+                          {usersData?.data?.map((pet) => {
+                            return (
+                              <option
+                                key={pet?.owner?.id}
+                              >{`${pet?.owner?.title} ${pet?.owner?.firstName} ${pet?.owner?.lastName}`}</option>
+                            );
                           })}
                         </select>
 
@@ -124,17 +136,15 @@ export default function createEditPost() {
                           type="text"
                           name="text"
                           id="text"
-                          
                           className="pl-3 mt-1 pr-10 py-2 bg-gray-100 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm text-sm border-gray-300 rounded-md"
                           placeholder="text"
                           defaultValue={formData?.user?.text ?? undefined}
                         />
 
-<input
+                        <input
                           type="text"
                           name="image"
                           id="image "
-
                           className="pl-3 mt-1 pr-10 py-2 bg-gray-100 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm text-sm border-gray-300 rounded-md"
                           placeholder="picture url"
                           defaultValue={formData?.user?.image}
@@ -143,17 +153,15 @@ export default function createEditPost() {
                           type="number"
                           name="likes"
                           id="likes "
-
                           className="pl-3 mt-1 pr-10 py-2 bg-gray-100 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm text-sm border-gray-300 rounded-md"
                           placeholder="picture url"
                           defaultValue={formData?.user?.likes}
                         />
 
-<input
+                        <input
                           type="text"
                           name="tags"
                           id="tags "
-
                           className="pl-3 mt-1 pr-10 py-2 bg-gray-100 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm text-sm border-gray-300 rounded-md"
                           placeholder="picture url"
                           defaultValue={formData?.user?.tags}
@@ -167,7 +175,9 @@ export default function createEditPost() {
                 <button
                   type="submit"
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm"
-                  onClick={()=>{submitForm()}}
+                  onClick={() => {
+                    submitForm();
+                  }}
                 >
                   Submit
                 </button>
