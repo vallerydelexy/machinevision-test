@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom'
 import { classNames } from '../utils/index'
 import { useLocation } from "react-router-dom"
-import { useRecoilState } from 'recoil'
-import { navigationAtom } from '../recoil/navigationAtom'
 
 
 export default function StaticSidebar({navigation}){
