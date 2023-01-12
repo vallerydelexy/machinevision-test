@@ -1,5 +1,5 @@
 
-# Rizki Aprita
+# [Rizki Aprita](https://aprita.web.id)
 
 test for frontend position at Machine Vision
 >this readme document assumes you are developer.
@@ -22,18 +22,18 @@ test for frontend position at Machine Vision
 ## Getting Started
 ### 1. clone this repo
 ```bash
-clone this-repo
+git clone https://github.com/vallerydelexy/machinevision-test.git
 ```
 ### 2. create an create an `.env` file
 ```bash
-cd folder
+cd machinevision-test
 touch .env
 ```
 
 
 ### 3. put your `app-id` as environment variable
 ```bash
-VITE_APP_ID=<some-random-character>
+VITE_APP_ID=<dummyapi.io-app-id>
 ```
 >you can generate your own `app-id` from [here](https://dummyapi.io/account)
 
