@@ -59,11 +59,13 @@ export default function Post() {
     }
   }
 
+  useEffect(() => {getData("post") }, [posts]);
+  useEffect(() => {getData("user") }, [users]);
   useEffect(() => {
-    getData("post");
-    getData("user");
     setSearchParams({ limit: postPerPage, page, created });
-  }, [users, posts, searchParams, setSearchParams, postPerPage, page, created]);
+  }, [searchParams, postPerPage, page, created]);
+
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen pb-6">
       <div className="py-4">
