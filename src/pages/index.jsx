@@ -1,19 +1,16 @@
-import { Outlet } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import StaticSidebar from "../components/staticSidebar";
-import { navigation } from "../components/NavigationItems";
-import MobileSidebar from "../components/MobileSidebar";
-import MenuButton from "../components/MenuButton";
 import { useState } from "react";
 import axios from "axios";
+import { useRecoilState } from "recoil";
 import Pagination from "../components/Pagination";
 import { useEffect } from "react";
 import Searchbar from "../components/Searchbar";
+import { postsDataAtom } from "../recoil/atom/postsDataAtom";
 
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useRecoilState(postsDataAtom);
   const [currentPage, setCurrentPage] = useState(undefined);
   const [totalPage, setTotalPage] = useState(undefined);
   const [postPerPage, setPostPerPage] = useState(searchParams.get('limit')??10);
