@@ -78,7 +78,7 @@ export default function Home() {
                     <p className="font-bold">{`${post?.owner?.firstName} ${post?.owner?.lastName}`}</p>
                     <p className="break-words">{post?.text}</p>
                     <p className="pt-2 text-gray-600 font-bold flex gap-2">
-                        {post.tags.map((tag)=>{
+                        {post?.tags?.map((tag)=>{
                             return `#${tag} `
                         })}
                     </p>
