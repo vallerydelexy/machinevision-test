@@ -12,7 +12,6 @@ export default function PreviewImage({ imageUrl }) {
   const [previewImageSource, setPreviewImageSource] = useRecoilState(
     previewImageSourceAtom
   );
-  console.log(open);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
